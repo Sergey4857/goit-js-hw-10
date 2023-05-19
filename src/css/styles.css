@@ -18,3 +18,44 @@ body {
   max-width: 320px;
   margin-bottom: 16px;
 }
+
+.country-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.country-item img {
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
+  margin-bottom: 0px;
+}
+
+.country-text {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  font-size: 19px;
+  line-height: 40px;
+  display: flex;
+  align-items: center;
+}
+.country-info {
+  margin-bottom: 10px;
+}
+
+.country-name {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.country-name img {
+  margin-right: 10px;
+}
+
+.country-name p {
+  font-size: 35px;
+  font-weight: bold;
+  margin: 0;
+}
