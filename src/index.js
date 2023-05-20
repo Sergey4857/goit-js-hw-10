@@ -18,27 +18,38 @@ refs.inputEL.addEventListener(
 );
 
 function onInputChange(evt) {
-  fetchCountries(evt.target.value.trim())
-    .then(info => {
-      if (info.length > 10) {
-        Notify.info(
-          'Too many matches found. Please enter a more specific name.'
-        );
-      } else if (info.length >= 2 && info.length <= 10) {
-        createMarkupManyCountries(info);
-      } else if (info.length === 1) {
-        console.log(info);
+  const inputValue = evt.target.value.trim();
 
-        createMarkupOneCountry(info);
-      } else {
-        console.log(info);
-      }
+  if (inputValue === '') {
+    clearEl(refs.countryList);
+    clearEl(refs.countryInfo);
+    return;
+  }
+
+  fetchCountries(inputValue)
+    .then(info => {
+      notifyUser(info);
     })
     .catch(error => Notify.failure('Oops, there is no country with that name'));
 }
 
+function clearEl(El) {
+  El.innerHTML = '';
+}
+
+function notifyUser(info) {
+  if (info.length > 10) {
+    Notify.info('Too many matches found. Please enter a more specific name.');
+  } else if (info.length >= 2 && info.length <= 10) {
+    clearEl(refs.countryInfo);
+    createMarkupManyCountries(info);
+  } else if (info.length === 1) {
+    clearEl(refs.countryList);
+    createMarkupOneCountry(info);
+  }
+}
+
 function createMarkupManyCountries(info) {
-  console.log(info);
   const markup = info
     .map(({ flags, name }) => {
       return `
@@ -53,7 +64,6 @@ function createMarkupOneCountry(info) {
   const markup = info
     .map(({ flags, name, capital, population, languages }) => {
       return `
- 
         <div class='country-name'>
           <img width="55"
             src='${flags.svg}'>
