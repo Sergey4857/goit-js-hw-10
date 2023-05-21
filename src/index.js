@@ -30,15 +30,26 @@ function onInputChange(evt) {
     .then(info => {
       notifyUser(info);
     })
-    .catch(error => Notify.failure('Oops, there is no country with that name'));
+    .catch(error => {
+      clearEl(refs.countryInfo);
+      onError(error);
+    });
 }
 
 function clearEl(El) {
   El.innerHTML = '';
 }
 
+function onError(error) {
+  console.log(error);
+  if (error.message === '404') {
+    Notify.failure('Oops, there is no country with that name');
+  }
+}
+
 function notifyUser(info) {
   if (info.length > 10) {
+    clearEl(refs.countryList);
     Notify.info('Too many matches found. Please enter a more specific name.');
   } else if (info.length >= 2 && info.length <= 10) {
     clearEl(refs.countryInfo);
